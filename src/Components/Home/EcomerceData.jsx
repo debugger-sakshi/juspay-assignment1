@@ -7,7 +7,7 @@ import LinesChart from './LinesChart';
 import Main from './Main';
 import RevenueByLocation from './RevenueByLocation';
 import RightSidebar from './RightSidebar';
-import World from '../../assets/images/world.svg'
+// import World from '../../assets/images/world.svg'
 const EcomerceData = () => {
     const color = [
         "var(--color-black)",
@@ -96,7 +96,7 @@ const EcomerceData = () => {
           </div>
           <div className='revenue-by-location mt-4 p-4'>
               {/* <RevenueByLocation /> */}
-              <img className='world-data' src={World} />
+              {/* <img className='world-data' src={World} /> */}
               <div>
               <RevenueByLocation /> 
               </div>
