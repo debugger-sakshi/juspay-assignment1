@@ -8,7 +8,7 @@ function App() {
     <Routes>
       <Route path="" element={<Home />} >
       <Route path="" element= {<EcomerceData />} />
-      <Route path="/order-list" element= {<Orderlist width={"86%"} />} />
+      
         </Route>
     </Routes>
   );

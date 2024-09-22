@@ -14,7 +14,7 @@
     --secondary-indigo:rgba(149, 164, 252, 1);
     --bullet-color: rgba(28, 28, 28, 0.4);
     --text-dark:rgba(28, 28, 28, 1);
-    --primary-brand:rgba(rgba(28, 28, 28, 1));
+    --primary-brand:rgba(28, 28, 28, 1);
 
 }
 *{
@@ -407,7 +407,7 @@ li::marker {
   }
   
   .round label:after {
-    border: 2px solid #fff;
+    border: 2px solid var(--color-white);
     border-top: none;
     border-right: none;
     content: "";
@@ -428,7 +428,7 @@ li::marker {
   }
   
   .round input[type="checkbox"]:checked + label {
-    background-color: var(--color-black);
+    background-color: var(--primary-brand);
     /* border-color: #66bb6a; */
   }
   

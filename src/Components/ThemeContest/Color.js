@@ -14,7 +14,7 @@ export const colorsLight = {
     "secondary-indigo" : "rgba(149, 164, 252, 1)",
     "bullet-color" : "rgba(28, 28, 28, 0.4)",
     "text-dark": "rgba(28, 28, 28, 1)",
-    "primary-brand":"rgba(rgba(28, 28, 28, 1))"
+    "primary-brand":"rgba(28, 28, 28, 1)"
 }
 export const colorsDark = {
     "color-white": "rgba(28, 28, 28, 1)",
