@@ -10,21 +10,50 @@ import RightSidebar from './RightSidebar';
 import World from '../../assets/images/world.svg'
 import { useState } from 'react';
 import Orderlist from './Orderlist';
+import { useGSAP } from '@gsap/react';
+import { gsap } from 'gsap';
+import { useRef } from 'react';
 const EcomerceData = () => {
     const color = [
         "var(--color-black)",
         "var(--secondary-cyan)"
       ]
       const [active, setActive] = useState(0)
+      const [showNotification, setShowNotification] = useState(false)
+      const handlerNotification = (val)=>{
+        // console.log("called")
+        setShowNotification(val)
+      }
+      const rightBarRef1 = useRef()
+      const orderRef = useRef()
+      useGSAP(()=>{
+        gsap.from(rightBarRef1.current,{
+            x:300,
+            opacity:0,
+            delay:0.5,
+            duration:0.5
+        })
+       
+    },[])
+    const {contextSafe} = useGSAP()
+    const handleOrder = contextSafe(()=>{
+      
+    gsap.from(orderRef.current,{
+      x:-300,
+      // y:500,
+      delay:1,
+      duration:1
+    })
+    })
   return (
     <>
     {
       active == 0 ? 
       <>
-      <Main>
+      <Main setShowNotification = {handlerNotification}>
          <h6 className=' mb-4'>eCommerce</h6>
       <div className='d-flex flex-wrap'>
-            <div className=' orders d-flex flex-wrap' style={{width:'47%'}}>
+            <div className=' orders d-flex flex-wrap' >
               <div className='first dark-text'>
                 <span>Customers</span>
                 <div className='d-flex mt-2 justify-content-between' >
@@ -35,7 +64,11 @@ const EcomerceData = () => {
                   </div>
                 </div>
               </div>
-              <div className='second pointer' onClick={()=> setActive(1)}>
+              <div 
+              ref={orderRef}
+              className='second pointer' onClick={()=> {
+                handleOrder()
+                setActive(1)}}>
               <span>Orders</span>
                 <div className='d-flex mt-2 justify-content-between' >
                   <h6>3,732</h6>
@@ -78,7 +111,7 @@ const EcomerceData = () => {
                 </div>
               </div>
             </div>
-            <div className='col-6 projections' style={{width:'52%'}}>
+            <div className='projections' >
               <h6 className='p-4'> Projections Vs Actuals</h6>
               <div className='px-4'>
               <HistogramChart />
@@ -151,7 +184,7 @@ const EcomerceData = () => {
             </div>
           </div>
           </Main>
-          <RightSidebar />
+          <RightSidebar  show={showNotification} setShowNotification={showNotification && setShowNotification}/>
       </>
       :
       <Orderlist width={'86%'} />

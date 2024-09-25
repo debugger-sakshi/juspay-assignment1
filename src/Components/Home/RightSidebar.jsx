@@ -4,9 +4,27 @@ import User from '../../assets/images/User.png'
 import Wifi from '../../assets/images/Wifi.png'
 import Men from '../../assets/images/Men.png'
 import Women from '../../assets/images/Women.png'
-const RightSidebar = () => {
+import { useGSAP } from '@gsap/react'
+import { gsap } from 'gsap'
+import { useRef } from 'react'
+const RightSidebar = ({show,setShowNotification}) => {
+  const rightBarRef = useRef()
+  useGSAP(()=>{
+    gsap.from(rightBarRef.current,{
+        x:300,
+        opacity:0,
+        delay:0.5,
+        duration:0.5
+    
+    })
+},[])
   return (
-    <div className=' p-4 rightBar'>
+    <div ref={rightBarRef} className={`${show == true ? "showNotification" : ""} `} onClick={()=> {
+      if(setShowNotification){
+        setShowNotification(false)
+      }
+    }}>
+      <div  className={`rightBar ${show == true ? "show" : ""}`}>
       <div>
         <div className='notifiction'>Notifications</div>
         <div className='mt-4'>
@@ -148,6 +166,7 @@ const RightSidebar = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

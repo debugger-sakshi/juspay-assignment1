@@ -98,13 +98,14 @@
 // export default LinesChart;
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { gsap } from "gsap";
 
 const RevenueLineChart = () => {
   const chartRef = useRef();
 
-  const currentWeekData = [10, 18,15,10, 22,25];
-const previousWeekData = [15, 10, 12,22,22,18];
-const labels = ["Jan", "Feb", "Mar","Apr","May","Jun"];
+  const currentWeekData = [10, 18, 15, 10, 22, 25];
+  const previousWeekData = [15, 10, 12, 22, 22, 18];
+  const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
   useEffect(() => {
     // Remove any existing SVG before rendering
@@ -125,33 +126,20 @@ const labels = ["Jan", "Feb", "Mar","Apr","May","Jun"];
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
-    const xScale = d3
-      .scalePoint()
-      .domain(labels)
-      .range([0, chartWidth]);
+    const xScale = d3.scalePoint().domain(labels).range([0, chartWidth]);
 
-    const yScale = d3
-      .scaleLinear()
-      .domain([0, 30]) // Y-axis domain (0 to 10M)
-      .range([chartHeight, 0]);
-
-    
+    const yScale = d3.scaleLinear().domain([0, 30]).range([chartHeight, 0]);
 
     // Remove Y-axis line and ticks
     svg
       .append("g")
       .call(d3.axisLeft(yScale).ticks(3).tickFormat((d) => `${d}M`))
       .selectAll("path")
-      .attr("stroke", "none"); // Hide the Y-axis line
-      
-    svg
-      .selectAll("g.tick line")
-      .attr("stroke", "none"); // Hide the ticks on the Y-axis
-      svg
-      .selectAll("g.tick text")
-      .attr("fill", "var(--color-grey)")
-      .attr("dy", "-1.5em")
-      .attr("font-size", "14px");
+      .attr("stroke", "none");
+
+    svg.selectAll("g.tick line").attr("stroke", "none");
+    svg.selectAll("g.tick text").attr("fill", "var(--color-grey)").attr("dy", "-1.5em").attr("font-size", "14px");
+
     // Horizontal grid lines
     svg
       .selectAll("line.horizontalGrid")
@@ -164,86 +152,72 @@ const labels = ["Jan", "Feb", "Mar","Apr","May","Jun"];
       .attr("y1", (d) => yScale(d))
       .attr("y2", (d) => yScale(d))
       .attr("stroke", "var(--color-active)")
-      .attr("stroke-width", 1)
-      // .attr("stroke-dasharray", "5,5");
-// X-axis with a left margin
-svg
-.append("g")
-.attr("transform", `translate(10,${chartHeight})`) // Left margin for x-axis
-.call(d3.axisBottom(xScale).tickSize(0))
-.selectAll("text")
-.attr("fill", "var(--color-grey)")
-.attr("font-size", "14px")
-.attr("dy", "1.5em")
-.attr("text-anchor", "middle");
-svg
-.selectAll("path")
-.attr("stroke", "none");
+      .attr("stroke-width", 1);
 
-svg
-.selectAll("g.tick line")
-// .attr("stroke", "none")
-.remove();
+    // X-axis
+    svg
+      .append("g")
+      .attr("transform", `translate(10,${chartHeight})`)
+      .call(d3.axisBottom(xScale).tickSize(0))
+      .selectAll("text")
+      .attr("fill", "var(--color-grey)")
+      .attr("font-size", "14px")
+      .attr("dy", "1.5em")
+      .attr("text-anchor", "middle");
+
+    svg.selectAll("path").attr("stroke", "none");
+    svg.selectAll("g.tick line").remove();
+
     // Line generator for smooth curves
     const lineGenerator = d3
       .line()
-      .curve(d3.curveMonotoneX) // Monotone curve for smooth lines
-      .x((d, i) => xScale(labels[i]) + 10) // Add margin to x-axis values
+      .curve(d3.curveMonotoneX)
+      .x((d, i) => xScale(labels[i]) + 10)
       .y((d) => yScale(d));
 
     // Solid line for current week data
-    svg
+    const currentWeekPath = svg
       .append("path")
       .datum(currentWeekData)
       .attr("fill", "none")
-      .attr("stroke", "var(--secondary-cyan)") // Blue color for the line
+      .attr("stroke", "var(--secondary-cyan)")
       .attr("stroke-width", 2)
       .attr("d", lineGenerator);
 
-    // Dashed line logic for previous week's data
-    previousWeekData.forEach((dataPoint, i) => {
-      if (i < previousWeekData.length - 1) {
-        const segmentData = [previousWeekData[i], previousWeekData[i + 1]];
+    // Dashed line for previous week data
+    const previousWeekPath = svg
+      .append("path")
+      .datum(previousWeekData)
+      .attr("fill", "none")
+      .attr("stroke", "#9966ff")
+      .attr("stroke-width", 2)
+      .attr("stroke-dasharray", previousWeekData.map((d) => (d > 20 ? "6,3" : "none")).join(","))
+      .attr("d", lineGenerator);
 
-        svg
-          .append("path")
-          .datum(segmentData)
-          .attr("fill", "none")
-          .attr("stroke", "#9966ff") // Purple color for previous week line
-          .attr("stroke-width", 2)
-          .attr("d", d3
-            .line()
-            .curve(d3.curveMonotoneX)
-            .x((d, j) => xScale(labels[i + j]) + 10) // Add margin to x-axis values
-            .y((d) => yScale(d)))
-          .attr("stroke-dasharray", dataPoint > 20 ? "6,3" : "none"); // Dashed if data > 4M
-      }
-    });
+    // Animate the lines with GSAP
+    const animateLineDrawing = (path) => {
+      const length = path.node().getTotalLength();
+      gsap.fromTo(
+        path.node(),
+        {
+          strokeDasharray: length,
+          strokeDashoffset: length,
+        },
+        {
+          strokeDashoffset: 0,
+          duration: 2.5,
+          ease: "power2.inOut",
+          delay:0.5
+        }
+      );
+    };
 
-    // Circles for current week data points
-  //   svg
-  //     .selectAll(".dot")
-  //     .data(currentWeekData)
-  //     .enter()
-  //     .append("circle")
-  //     .attr("cx", (d, i) => xScale(labels[i]) + 10)
-  //     .attr("cy", (d) => yScale(d))
-  //     .attr("r", 5)
-  //     .attr("fill", "#4bc0c0");
-
-  //   // Circles for previous week data points
-  //   svg
-  //     .selectAll(".dot-previous")
-  //     .data(previousWeekData)
-  //     .enter()
-  //     .append("circle")
-  //     .attr("cx", (d, i) => xScale(labels[i]) + 10)
-  //     .attr("cy", (d) => yScale(d))
-  //     .attr("r", 5)
-  //     .attr("fill", "#9966ff");
+    // Animate both lines
+    animateLineDrawing(currentWeekPath);
+    animateLineDrawing(previousWeekPath);
   }, []);
 
-  return <div ref={chartRef}></div>;
+  return <div className="showChart" ref={chartRef}></div>;
 };
 
 export default RevenueLineChart;

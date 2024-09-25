@@ -4,5 +4,5 @@
 ### to check dark theme 
 Click on light icon in header section
 
-### to see orderlist
+### to check orderlist
 Click on orders of ecommerce

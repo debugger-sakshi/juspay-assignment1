@@ -44,6 +44,17 @@
 // }
 
 // export default TotalSales
+// const observer = new IntersectionObserver((enteries)=>{
+//   enteries.forEach((entry)=>{
+//     console.log(entry)
+//     if(entry.isIntersecting){
+//       entry.target.classList.add('show')
+//     }
+//     else{
+
+//     }
+//   })
+// })
 
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
@@ -69,7 +80,7 @@ const TotalSales = () => {
   const svgRef = useRef();
   const tooltipRef = useRef();
   const totalValue = data.reduce((sum,ele)=>{
-    console.log("naem",ele,sum)
+    // console.log("naem",ele,sum)
     // sum =  sum + ele.value
     sum = sum+ ele.value
     return sum

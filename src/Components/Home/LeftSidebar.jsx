@@ -3,12 +3,28 @@ import ByeWind from '../../assets/images/ByeWind.png';
 
 import LeftArrow from '../../assets/images/ArrowLineLeft.png'
 import DownArrow from '../../assets/images/ArrowLineDown.png'
+import { useGSAP } from '@gsap/react';
+import { useRef } from 'react';
+import { gsap } from 'gsap';
+import { useTheme } from '../ThemeContest/ThemeContext';
 
 const LeftSidebar = () => {
     const [active, setActive] = useState(0)
     const [activePage, setActivePage] = useState(0)
+    const leftBarRef = useRef()
+    const {isOpen, setIsOpen} = useTheme()
+    // console.log(leftBarRef)
+    useGSAP(()=>{
+        gsap.from(leftBarRef.current,{
+            x:-300,
+            opacity:0,
+            delay:0.5,
+        
+        })
+    },[])
     return (
-        <div className='p-4 leftbar'>
+        <div ref={leftBarRef}  className={`leftbar  ${isOpen ? "d-block showLeftOverlay" : ""}`} onClick={()=> setIsOpen(false)}>
+            <div className={`${isOpen ? "showLeftbar" : ""}`}>
             <div className='d-flex align-items-center'>
                 <div className='circle me-2'>
                     <img className='' src={ByeWind} alt="img" />
@@ -276,6 +292,7 @@ const LeftSidebar = () => {
                     </span>
                     <span className='f-14'>Social</span>
                 </div>
+            </div>
             </div>
         </div>
     )

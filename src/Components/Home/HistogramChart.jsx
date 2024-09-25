@@ -85,21 +85,20 @@ const StackedHistogram = () => {
       .scaleBand()
       .domain(data.map((d) => d.month))
       .range([0, width])
-      .padding(0.5); // Adjust padding to give space between bars
+      .padding(0.5);
 
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(
-        d3.axisBottom(xScale)
-          .tickSize(0) // Remove x-axis ticks
+        d3.axisBottom(xScale).tickSize(0) // Remove x-axis ticks
       )
       .selectAll("text")
       .attr("transform", "translate(0,10)")
       .attr("dy", "0.2em")
       .style("text-anchor", "middle")
-      .style("font-size",14)
-      .style("color", "var(--color-grey)"); // Set x-axis label color to red
+      .style("font-size", 14)
+      .style("color", "var(--color-grey)");
 
     // Y-axis
     const yMax = 30; // Maximum value for y-axis
@@ -115,13 +114,13 @@ const StackedHistogram = () => {
         d3.axisLeft(yScale)
           .ticks(yMax / 10) // Set y-axis ticks with a 10M difference
           .tickSize(0) // Remove y-axis ticks
-          .tickFormat((d) => `${d}M`) // Format ticks with "M"
+          .tickFormat((d) => `${d}M`)
       )
       .selectAll("text")
-      .attr('x',-6)
-      .style("font-size",14)
-      .attr("dy",1)
-      .style("color", "var(--color-grey)"); // Set y-axis label color to red
+      .attr("x", -6)
+      .style("font-size", 14)
+      .attr("dy", 1)
+      .style("color", "var(--color-grey)");
 
     // Remove the y-axis line (the domain path)
     svg.select(".domain").remove();
@@ -137,8 +136,7 @@ const StackedHistogram = () => {
       .attr("x2", width)
       .attr("y1", (d) => yScale(d))
       .attr("y2", (d) => yScale(d))
-      .attr("stroke", "var(--color-active)")
-      // .attr("stroke-dasharray", "4");
+      .attr("stroke", "var(--color-active)");
 
     // Stacking the data
     const stack = d3
@@ -150,10 +148,21 @@ const StackedHistogram = () => {
     const stackedData = stack(data);
 
     // Create color scale for groups
-    const color = d3.scaleOrdinal().domain(["groupA", "groupB"]).range(["var(--secondary-cyan)","var(--color-blue)"]);
+    const color = d3.scaleOrdinal().domain(["groupA", "groupB"]).range(["var(--secondary-cyan)", "var(--color-blue)"]);
+
+    // Tooltip div element
+    const tooltip = d3.select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("background", "#f9f9f9")
+      .style("padding", "8px")
+      .style("border", "1px solid #ccc")
+      .style("border-radius", "4px")
+      .style("display", "none")
+      .style("pointer-events", "none");
 
     // Drawing the stacked bars with width 20px
-    svg
+    let  layers = svg
       .selectAll("g.layer")
       .data(stackedData)
       .enter()
@@ -167,15 +176,36 @@ const StackedHistogram = () => {
       .attr("x", (d) => xScale(d.data.month) + (xScale.bandwidth() - 20) / 2) // Center the bars
       .attr("y", (d) => yScale(d[1]))
       .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
-      .attr("width", 20) // Set bar width to 20px
-      .attr("rx", (d) => (d[1] - d[0] > 0 && d[1] === d[1] ? 4 : 0)) // Set border radius for the top corners (horizontal)
-      // .attr("ry", 8)
-      // .attr("rx", (d,i) => (i == 1 ? 0 : 4)) // Apply border-radius only to groupB
-      // .attr("ry", (d, i, nodes) => (nodes.parentNode.__data__.key === "groupB" ? 8 : 0))
-      // .attr("transform", (d, i, nodes) => {
-      //   const key = nodes.parentNode.__data__.key;
-      //   return key === "groupB" ? `translate(0, 0)` : "";
-      // });
+      .attr("width", 20)
+      .attr("rx", (d) => {
+       
+        return (d[1] - d[0] > 0 ? 4 : 0)}) // Border-radius for top corners
+      .on("mousemove", (event, d) => {
+        const groupName = event.currentTarget.parentNode.__data__.key;
+        tooltip
+          // .html(`<strong>${groupName}</strong><br/>Month: ${d.data.month}<br/>Value: ${d[1] - d[0]}`)
+          .html(`<strong>${groupName}</strong><br/>Value: ${d[1] - d[0]}`)
+          .style("display", "block")
+          .style("background", "var(--color-black)")
+          .style("color", "var(--color-white)")
+          .style("font-size", "10px")
+          .style("left", `${event.pageX + 10}px`)
+          .style("top", `${event.pageY - 30}px`);
+
+          // svg
+          // .selectAll("rect")
+          // .style("scale","1.1")
+      })
+      .on('mouseout', function() {
+        // d3.select(this).attr('fill-opacity', 1);
+        tooltip.style('display', 'none'); // Hide tooltip on mouseout
+        // svg
+        //   .selectAll("rect")
+        //   .style("scale","1")
+      });
+
+    // Hide tooltip when clicked elsewhere
+    d3.select("body").on("click", () => tooltip.style("display", "none"));
 
     // Add Y-axis label
     svg
@@ -187,14 +217,13 @@ const StackedHistogram = () => {
       .style("text-anchor", "middle")
       // .text("Revenue (in Millions)");
       svg.selectAll(".domain").remove();
-      
+
     // Add X-axis label
     svg
       .append("text")
       .attr("x", width / 2)
       .attr("y", height + margin.bottom - 10)
       .style("text-anchor", "middle");
-      // .text("Months");
   }, []);
 
   return (
@@ -205,4 +234,3 @@ const StackedHistogram = () => {
 };
 
 export default StackedHistogram;
-

@@ -5,6 +5,8 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom'
 import ThemeProvider from './Components/ThemeContest/ThemeContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// import { gsap } from "gsap";
+// gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin, TextPlugin);
 root.render(
   <React.StrictMode>
     <ThemeProvider>

@@ -15,6 +15,8 @@
     --bullet-color: rgba(28, 28, 28, 0.4);
     --text-dark:rgba(28, 28, 28, 1);
     --primary-brand:rgba(28, 28, 28, 1);
+    --projection-width: 450;
+    --projection-height: 200;
 
 }
 *{
@@ -37,11 +39,18 @@ img{
 .content {
     width: 100%;
     min-height: 100%;
+    overflow: hidden;
+}
+.inner-content{
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
 }
 .leftbar{
     /* height: 100%; */
     width: 15%;
     border-right: 1px solid var(--border-color);
+    padding: 1.5rem;
   
     
 }
@@ -103,6 +112,7 @@ li::marker {
     /* height: 100%; */
     width: 18%;
     border-left: 1px solid var(--border-color);
+    padding: 1.5rem;
     
 }
 .icon-16{
@@ -139,14 +149,17 @@ li::marker {
 }
 .orders{
     height: 252px;
-    pad: 0.5rem;
+    padding: 0.5rem;
     gap: 20px;
+    width: 50%;
 
 }
 .orders > div {
     width: 202px;
     height: 112px;
     border-radius: 16px;
+    box-shadow: 4px 4px 4px #aeaeae59;
+    cursor: pointer;
 }
 .orders .first{
     background-color: var(--color-blue);
@@ -179,15 +192,19 @@ li::marker {
     height: 252px;
     background-color: var(--primary-light);
     border-radius: 1rem;
+    width: 50%;
 }
 .revenue{
     width: 69%;
     border-radius: 1rem;
     padding: 24px;
+    box-shadow: 4px 4px 4px #aeaeae59;
+    
 }
 .revenue-by-location{
     width: 28%;
     border-radius: 1rem;
+    box-shadow: 4px 4px 4px #aeaeae59;
 }
 .revenue,.revenue-by-location{
     /* max-height: 318px; */
@@ -435,4 +452,56 @@ li::marker {
   .round input[type="checkbox"]:checked + label:after {
     opacity: 1;
   }
+  .orders > div:hover{
+    scale: 1.1;
+    transition: all 0.5s ease-in;
+  }
+  .showCHart{
+    display: none;
+  }
+
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    transition: transform 0.3s ease;
+  }
   
+  .menu-icon.open {
+    transform: rotate(45deg);
+  }
+  
+  .bar {
+    width: 100%;
+    height: 4px;
+    background-color: black;
+    transition: all 0.3s ease;
+  }
+  
+  .menu-icon.open .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .menu-icon.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-icon.open .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  .showLeftOverlay{
+    width: 100% !important;
+    position: absolute;
+    z-index: 10;
+    background-color: var(--color-grey);
+    padding: 0;
+  }
+  .showLeftbar{
+    width: 20%;
+    background-color: var(--color-white);
+    height: 100vh;
+    padding: 1.5rem;
+  }

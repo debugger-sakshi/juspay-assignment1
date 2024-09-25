@@ -20,9 +20,9 @@ const ThemeProvider = ({children}) => {
   Object.entries(themes[theme])?.forEach(([key, value]) => {
     root.style.setProperty(`--${key}`, value);
   });
-
+  const [isOpen, setIsOpen] = useState(false)
   return (
-    <ThemeContext.Provider value={{theme, setThemeContext}}>
+    <ThemeContext.Provider value={{theme, setThemeContext,isOpen,setIsOpen}}>
         {children}
     </ThemeContext.Provider>
   )
