@@ -130,7 +130,16 @@ const RevenueLineChart = () => {
     const xScale = d3.scalePoint().domain(labels).range([0, chartWidth]);
 
     const yScale = d3.scaleLinear().domain([0, 30]).range([chartHeight, 0]);
-
+ // Tooltip div element
+ const tooltip = d3.select("body")
+ .append("div")
+ .style("position", "absolute")
+ .style("background", "#f9f9f9")
+ .style("padding", "8px")
+ .style("border", "1px solid #ccc")
+ .style("border-radius", "4px")
+ .style("display", "none")
+ .style("pointer-events", "none");
     // Remove Y-axis line and ticks
     svg
       .append("g")
@@ -175,6 +184,7 @@ const RevenueLineChart = () => {
       .curve(d3.curveMonotoneX)
       .x((d, i) => xScale(labels[i]) + 10)
       .y((d) => yScale(d));
+     
 
     // Solid line for current week data
     const currentWeekPath = svg
@@ -183,7 +193,33 @@ const RevenueLineChart = () => {
       .attr("fill", "none")
       .attr("stroke", "var(--secondary-cyan)")
       .attr("stroke-width", 2)
-      .attr("d", lineGenerator);
+      .attr("d", lineGenerator)
+      .on("mousemove", (event, d,i) => {
+     
+        previousWeekData.map((d)=>(
+          tooltip
+
+          .html(`<strong>${d} M</strong><br/>`)
+          // .html(`<strong>${groupName}</strong><br/>Value: ${d[1] - d[0]}`)
+          .style("display", "block")
+          .style("background", "var(--color-black)")
+          .style("color", "var(--color-white)")
+          .style("font-size", "10px")
+          .style("left", `${event.pageX + 10}px`)
+          .style("top", `${event.pageY - 30}px`)
+        ))
+
+          // svg
+          // .selectAll("rect")
+          // .style("scale","1.1")
+      })
+      .on('mouseout', function() {
+        // d3.select(this).attr('fill-opacity', 1);
+        tooltip.style('display', 'none'); // Hide tooltip on mouseout
+        // svg
+        //   .selectAll("rect")
+        //   .style("scale","1")
+      });
 
     // Dashed line for previous week data
     const previousWeekPath = svg
@@ -193,7 +229,34 @@ const RevenueLineChart = () => {
       .attr("stroke", "#9966ff")
       .attr("stroke-width", 2)
       .attr("stroke-dasharray", previousWeekData.map((d) => (d > 20 ? "6,3" : "none")).join(","))
-      .attr("d", lineGenerator);
+      .attr("d", lineGenerator)
+      .on("mousemove", (event, d,i) => {
+        // const groupName = event.currentTarget.parentNode.__data__.key;
+        console.log(event,d,i)
+        previousWeekData.map((d)=>(
+          tooltip
+
+          .html(`<strong>${d}</strong><br/>`)
+          // .html(`<strong>${groupName}</strong><br/>Value: ${d[1] - d[0]}`)
+          .style("display", "block")
+          .style("background", "var(--color-black)")
+          .style("color", "var(--color-white)")
+          .style("font-size", "10px")
+          .style("left", `${event.pageX + 10}px`)
+          .style("top", `${event.pageY - 30}px`)
+        ))
+
+          // svg
+          // .selectAll("rect")
+          // .style("scale","1.1")
+      })
+      .on('mouseout', function() {
+        // d3.select(this).attr('fill-opacity', 1);
+        tooltip.style('display', 'none'); // Hide tooltip on mouseout
+        // svg
+        //   .selectAll("rect")
+        //   .style("scale","1")
+      });
 
     // Animate the lines with GSAP
     const animateLineDrawing = (path) => {

@@ -512,3 +512,6 @@ li::marker {
 .ecm-width{
     width: 68%;
 }
+.header-span{
+    cursor: pointer;
+}

@@ -59,7 +59,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const TotalSales = () => {
+const TotalSales = ({totalSaleRef}) => {
   const width = 150;
   const height = 150;
   const MARGIN = 30;
@@ -161,10 +161,10 @@ const TotalSales = () => {
 
   }, [data]);
   return (
-    <div className='p-4'>
+    <div className='p-4' >
       <h6>Total Sales</h6>
-      <div className='d-flex justify-content-center'>
-      <div style={{position:'relative'}}>
+      <div className='d-flex justify-content-center '  >
+      <div style={{position:'relative'}} ref={totalSaleRef}>
       <svg ref={svgRef}></svg>
       <div
         ref={tooltipRef}
