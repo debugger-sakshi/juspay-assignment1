@@ -53,7 +53,7 @@ const EcomerceData = () => {
       scrollTrigger:{
         trigger:"#totalSaleRef",
         scroll:".content",
-        markers:true,
+        // markers:true,
         start:'top 80%'
       }
   
