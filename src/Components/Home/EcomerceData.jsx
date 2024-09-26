@@ -58,7 +58,7 @@ const EcomerceData = () => {
       }
   
     })
-  }, [scop])
+  }, [])
 
   
   useGSAP(() => {
