@@ -13,6 +13,7 @@ import Orderlist from './Orderlist';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useRef } from 'react';
+import { useEffect } from 'react';
 const EcomerceData = () => {
     const color = [
         "var(--color-black)",
@@ -24,10 +25,21 @@ const EcomerceData = () => {
         // console.log("called")
         setShowNotification(val)
       }
-      const rightBarRef1 = useRef()
+      const rightBarRef = useRef()
       const orderRef = useRef()
+      const mainRef = useRef()
+      const orderMainRef = useRef()
+  useGSAP(()=>{
+    gsap.from(mainRef.current,{
+        y:300,
+       
+        opacity:0,
+        delay:0.4,
+    
+    })
+},[])
       useGSAP(()=>{
-        gsap.from(rightBarRef1.current,{
+        gsap.from(rightBarRef.current,{
             x:300,
             opacity:0,
             delay:0.5,
@@ -38,19 +50,39 @@ const EcomerceData = () => {
     const {contextSafe} = useGSAP()
     const handleOrder = contextSafe(()=>{
       
-    gsap.from(orderRef.current,{
-      x:-300,
-      // y:500,
-      delay:1,
-      duration:1
+    // gsap.from(orderRef.current,{
+    //   // x:300,
+    //   y:500,
+    //   delay:1,
+    //   duration:1
+    // })
+    gsap.to(rightBarRef.current,{
+      x:320,
+      // y:200,
+      // delay:0.5,
+      duration:0.5,
+      // ease:"sine.out",
+      display:'none',
     })
+    gsap.from(mainRef.current,{
+      y:600,
+      x:500,
+      opacity:0,
+      delay:0.5,
+      duration:1.5,
+
+  
+  })
+    })
+    useEffect(()=>{
+      window.scrollTo(0,0)
     })
   return (
     <>
+      <Main setShowNotification = {handlerNotification} mainRef={mainRef} width={active == 0 ? 'ecm-width' : 'order-width'}>
     {
       active == 0 ? 
       <>
-      <Main setShowNotification = {handlerNotification}>
          <h6 className=' mb-4'>eCommerce</h6>
       <div className='d-flex flex-wrap'>
             <div className=' orders d-flex flex-wrap' >
@@ -183,12 +215,13 @@ const EcomerceData = () => {
               <TotalSales />
             </div>
           </div>
-          </Main>
-          <RightSidebar  show={showNotification} setShowNotification={showNotification && setShowNotification}/>
+          
       </>
       :
-      <Orderlist width={'86%'} />
+      <Orderlist  width={'86%'} />
     }
+    </Main>
+    <RightSidebar  rightBarRef={rightBarRef} show={showNotification} setShowNotification={showNotification && setShowNotification}/>
     </>
 
   )

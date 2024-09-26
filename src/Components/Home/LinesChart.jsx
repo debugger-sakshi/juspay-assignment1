@@ -106,12 +106,13 @@ const RevenueLineChart = () => {
   const currentWeekData = [10, 18, 15, 10, 22, 25];
   const previousWeekData = [15, 10, 12, 22, 22, 18];
   const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
-
+  console.log(window.innerWidth > 700 ? 600 : window.innerWidth)
   useEffect(() => {
     // Remove any existing SVG before rendering
     d3.select(chartRef.current).select("svg").remove();
 
-    const width = 600;
+    const width = window.innerWidth > 700 ? 600 : window.innerWidth - 100 ;
+    console.log(width)
     const height = 275;
     const margin = { top: 40, right: 30, bottom: 40, left: 50 };
 

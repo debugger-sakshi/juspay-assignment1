@@ -51,6 +51,7 @@ img{
     width: 15%;
     border-right: 1px solid var(--border-color);
     padding: 1.5rem;
+    z-index: 10;
   
     
 }
@@ -110,7 +111,7 @@ li::marker {
 }
 .rightBar{
     /* height: 100%; */
-    width: 18%;
+    width: 100%;
     border-left: 1px solid var(--border-color);
     padding: 1.5rem;
     
@@ -505,3 +506,9 @@ li::marker {
     height: 100vh;
     padding: 1.5rem;
   }
+.order-width{
+    width: 85%;
+}
+.ecm-width{
+    width: 68%;
+}

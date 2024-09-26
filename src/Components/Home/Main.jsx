@@ -11,20 +11,12 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 
 
-const Main = ({children, width,setShowNotification}) => {
+const Main = ({children, width,setShowNotification, mainRef}) => {
   const {theme, setThemeContext,isOpen,setIsOpen} = useTheme()
-  const mainRef = useRef()
-  useGSAP(()=>{
-    gsap.from(mainRef.current,{
-        y:300,
-        opacity:0,
-        delay:0.4,
-    
-    })
-},[])
+  
   // console.log(setShowNotification)
   return (
-    <div ref={mainRef} className='main' style={{width:width}}>
+    <div ref={mainRef} className={`main ${width}`} >
       <div className='header d-flex p-4 justify-content-between' >
         <div className='left d-flex '>
         <div className={`menu-icon me-2 ${isOpen ? 'open' : ''}`} onClick={()=>setIsOpen(!isOpen)}>
@@ -46,9 +38,9 @@ const Main = ({children, width,setShowNotification}) => {
 </svg>
 
           </span>
-          <span className='mx-2 text-grey'>Dashboards</span>
-          <span className='mx-2 '>/</span>
-          <span className='mx-2 '> Default</span>
+          <span className='mx-2 text-grey dash'>Dashboards</span>
+          <span className='mx-2 dash'>/</span>
+          <span className='mx-2 dash'> Default</span>
         </div>
         <div className='right d-flex'>
         <div className='search search-header'>

@@ -10,7 +10,7 @@ import { FormControlLabel, FormGroup, Pagination, Stack } from '@mui/material';
 import CheckIcon from '../../assets/images/Checkbox.svg'
 import Search from '../../assets/images/Search.png'
 import Main from './Main';
-const Orderlist = ({ width }) => {
+const Orderlist = ({}) => {
     const [page, setPage] = useState(1);
     const [index,setIndex] = useState(0)
     const handleChange = (event, value) => {
@@ -484,11 +484,11 @@ const Orderlist = ({ width }) => {
         }
     ]]
     return (
-        <Main width={width}>
+        <>
             {/* <h6>eCommerce</h6> */}
             <h6>Order list</h6>
 
-            <div className='orderList'>
+            <div className='orderList' >
                 <div className='header d-flex justify-content-between'>
                     <div className=''>
                         <span className='icon-20 me-2'>
@@ -600,7 +600,7 @@ const Orderlist = ({ width }) => {
                     </div>
                 </div>
             </div>
-        </Main>
+        </>
     )
 }
 

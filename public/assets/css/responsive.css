@@ -53,3 +53,34 @@
         display: flex;
     }
 }
+@media (max-width:935px) {
+    /* .content{
+        min-width: 935px;
+    }
+    .main {
+        
+        overflow-x: auto;
+    } */
+    .orders, .projections,.revenue,.revenue-by-location{
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+    .showLeftbar{
+        width: 50%;
+    }
+    .show{
+        width: 280px;
+    }
+}
+@media (max-width:630px){
+    .header .left .dash{
+        display: none;
+    }
+    
+}
+@media (max-width:475px){
+    .orders > div{
+        width: 10rem !important;
+    }
+    
+}

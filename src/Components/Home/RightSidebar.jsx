@@ -7,17 +7,8 @@ import Women from '../../assets/images/Women.png'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { useRef } from 'react'
-const RightSidebar = ({show,setShowNotification}) => {
-  const rightBarRef = useRef()
-  useGSAP(()=>{
-    gsap.from(rightBarRef.current,{
-        x:300,
-        opacity:0,
-        delay:0.5,
-        duration:0.5
-    
-    })
-},[])
+const RightSidebar = ({show,setShowNotification,rightBarRef}) => {
+ 
   return (
     <div ref={rightBarRef} className={`${show == true ? "showNotification" : ""} `} onClick={()=> {
       if(setShowNotification){
