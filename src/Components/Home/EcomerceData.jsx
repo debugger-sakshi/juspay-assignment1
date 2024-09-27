@@ -49,12 +49,14 @@ const EcomerceData = () => {
       // opacity: 0,
       delay: 1,
       duration:1,
-      rotate:'180',
+      rotate:'270',
       scrollTrigger:{
         trigger:"#totalSaleRef",
         scroll:".content",
         // markers:true,
-        start:'top 80%'
+        start:'top 85%',
+        end:"top 30%",
+        scrub:true
       }
   
     })
