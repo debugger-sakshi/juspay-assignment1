@@ -114,6 +114,8 @@ li::marker {
     width: 100%;
     border-left: 1px solid var(--border-color);
     padding: 1.5rem;
+    /* background-color: var(--color-white);
+    color: var(--color-black); */
     
 }
 .icon-16{
