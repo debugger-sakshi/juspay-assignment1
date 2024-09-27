@@ -49,7 +49,7 @@ const EcomerceData = () => {
 
       // opacity: 0,
       delay: 1,
-      duration:1,
+      duration:2,
       rotate:'270',
       scrollTrigger:{
         trigger:"#totalSaleRef",
