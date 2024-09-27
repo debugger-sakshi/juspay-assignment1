@@ -149,7 +149,7 @@ const StackedHistogram = () => {
     const color = d3
       .scaleOrdinal()
       .domain(["groupA", "groupB"])
-      .range(["var(--secondary-cyan)", "var(--color-blue)"]);
+      .range(["var(--secondary-cyan)", "rgba(168, 197, 218, 0.5)"]);
 
     // Tooltip div element
     const tooltip = d3
@@ -181,7 +181,17 @@ const StackedHistogram = () => {
       .attr("y", height) // Start from the bottom
       .attr("height", 0) // Initially height is 0 for animation
       .attr("width", 20)
-      .attr("rx", (d) => (d[1] - d[0] > 0 ? 4 : 0)) // Border-radius for top corners
+      // .attr("rx", (d) => (d[1] - d[0] > 0 ? 4 : 0)) // Border-radius for top corners
+      .attr("rx", (d, i, nodes) => {
+        const parentGroup = nodes[i].parentNode.__data__.key;
+        // Apply border-radius only for Group B
+        return parentGroup === "groupB" ? 4 : 0; // Rounded top corners for Group B
+      })
+      // .attr("ry", (d, i, nodes) => {
+      //   const parentGroup = nodes[i].parentNode.__data__.key;
+      //   // Only Group B gets top rounded corners
+      //   return parentGroup === "groupB" ? 2 : 0;
+      // })
       .on("mousemove", (event, d) => {
         const groupName = event.currentTarget.parentNode.__data__.key;
         tooltip

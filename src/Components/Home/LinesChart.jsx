@@ -193,10 +193,11 @@ const RevenueLineChart = () => {
       .attr("fill", "none")
       .attr("stroke", "var(--secondary-cyan)")
       .attr("stroke-width", 2)
+      .attr("filter", 'drop-shadow(2px 2px 4px rgba(168, 197, 218, 0.5))')
       .attr("d", lineGenerator)
       .on("mousemove", (event, d,i) => {
      
-        previousWeekData.map((d)=>(
+        currentWeekData.map((d)=>(
           tooltip
 
           .html(`<strong>${d} M</strong><br/>`)
@@ -226,9 +227,10 @@ const RevenueLineChart = () => {
       .append("path")
       .datum(previousWeekData)
       .attr("fill", "none")
-      .attr("stroke", "#9966ff")
+      .attr("stroke", "var(--color-black)")
       .attr("stroke-width", 2)
       .attr("stroke-dasharray", previousWeekData.map((d) => (d > 20 ? "6,3" : "none")).join(","))
+      
       .attr("d", lineGenerator)
       .on("mousemove", (event, d,i) => {
         // const groupName = event.currentTarget.parentNode.__data__.key;
