@@ -194,6 +194,7 @@ li::marker {
     background-color: var(--primary-light);
     border-radius: 1rem;
     width: 50%;
+    box-shadow: 4px 4px 4px #aeaeae59;
 }
 .revenue{
     width: 69%;

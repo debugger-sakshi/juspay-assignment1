@@ -6,3 +6,5 @@ Click on light icon in header section
 
 ### to check orderlist
 Click on orders of ecommerce
+
+###hover on chart will show  data 

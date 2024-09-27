@@ -41,6 +41,7 @@ const EcomerceData = () => {
 
       opacity: 0,
       delay: 0.4,
+    
 
     })
     gsap.from(totalSaleRef.current, {
@@ -72,6 +73,7 @@ const EcomerceData = () => {
       duration: 1,
 
       ease: "sine.out",
+  
 
     })
     gsap.from(orderRef.current, {
