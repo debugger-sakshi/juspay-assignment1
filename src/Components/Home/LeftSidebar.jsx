@@ -23,7 +23,12 @@ const LeftSidebar = () => {
         })
     },[])
     return (
-        <div ref={leftBarRef}  className={`leftbar  ${isOpen ? "d-block showLeftOverlay" : ""}`} onClick={()=> setIsOpen(false)}>
+        <div ref={leftBarRef}  className={`leftbar  ${isOpen ? "d-block showLeftOverlay" : ""}`} onClick={(e)=> {
+            console.log(leftBarRef.current, e.target,e.currentTarget)
+            e.stopPropagation()
+            e.preventDefault()
+            if(e.target==e.currentTarget)
+            setIsOpen(false)}}>
             <div className={`${isOpen ? "showLeftbar" : ""}`}>
             <div className='d-flex align-items-center'>
                 <div className='circle me-2'>

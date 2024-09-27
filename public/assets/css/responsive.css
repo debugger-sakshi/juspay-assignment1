@@ -76,11 +76,23 @@
     .header .left .dash{
         display: none;
     }
-    
+    .order-row .col-2{
+        width: 30%;
+    }
 }
 @media (max-width:475px){
     .orders > div{
         width: 10rem !important;
     }
-    
+    .order-row .col-2{
+        width: 35%;
+    }
+}
+@media (max-width:400px){
+    .orders > div{
+        width: 8rem !important;
+    }
+    .order-row .col-2{
+        width: 35%;
+    }
 }

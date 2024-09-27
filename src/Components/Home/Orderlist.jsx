@@ -524,7 +524,7 @@ const Orderlist = ({}) => {
                         </span>
                     </div>
                 </div>
-                <div>
+                <div className='scollX'>
                     <div className='order-row d-flex f-12 align-items-center'>
                         {/* <FormGroup>
             <FormControlLabel control={<Checkbox defaultChecked />} label="#989839e" />

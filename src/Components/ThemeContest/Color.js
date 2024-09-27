@@ -21,7 +21,7 @@ export const colorsDark = {
     "color-black" : "rgba(255, 255, 255, 1)",
     "color-light" : "rgba(255, 255, 255, 0.2)",
     "color-grey" : "rgba(255, 255, 255, 0.4)",
-    "border-color" : "rgba(28, 28, 28, 0.1)",
+    "border-color" : "rgba(255, 255, 255, 0.1))",
     "color-active" : "rgba(255, 255, 255, 0.05)",
     "color-blue" : "rgba(227, 245, 255, 1)",
     "primary-light" : "rgba(255, 255, 255, 0.05)",

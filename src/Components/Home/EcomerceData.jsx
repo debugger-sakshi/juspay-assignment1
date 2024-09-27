@@ -155,7 +155,7 @@ const EcomerceData = () => {
           active == 0 ?
             <>
               <h6 className=' mb-4'>eCommerce</h6>
-              <div className='d-flex flex-wrap' >
+              <div className='d-flex flex-wrap scroll' >
                 <div className=' orders d-flex flex-wrap'  >
                   <div className='first dark-text' ref={orderMainRef}>
                     <span>Customers</span>
