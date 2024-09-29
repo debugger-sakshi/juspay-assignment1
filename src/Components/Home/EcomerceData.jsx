@@ -33,7 +33,7 @@ const EcomerceData = () => {
   const orderMainRef1 = useRef()
   const orderMainRef2 = useRef()
   const totalSaleRef = useRef()
-
+  const headerRef = useRef()
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     gsap.from(mainRef.current, {
@@ -41,6 +41,23 @@ const EcomerceData = () => {
 
       opacity: 0,
       delay: 0.4,
+    
+
+    })
+    gsap.from(headerRef.current, {
+      y: -300,
+
+      opacity: 0,
+      delay: 0.4,
+    
+
+    })
+    gsap.from(".header span", {
+      y: -300,
+
+      opacity: 0,
+      delay: 0.4,
+      stagger:0.1
     
 
     })
@@ -53,10 +70,10 @@ const EcomerceData = () => {
       rotate:'270',
       scrollTrigger:{
         trigger:"#totalSaleRef",
-        scroll:".content",
+        scroll:".scroll",
         // markers:true,
         start:'top 85%',
-        end:"top 30%",
+        end:"top 20%",
         scrub:true
       }
   
@@ -150,7 +167,7 @@ const EcomerceData = () => {
   })
   return (
     <>
-      <Main setShowNotification={handlerNotification} mainRef={mainRef} width={active == 0 ? 'ecm-width' : 'order-width'}>
+      <Main setShowNotification={handlerNotification} mainRef={mainRef} headerRef={headerRef} width={active == 0 ? 'ecm-width' : 'order-width'}>
         {
           active == 0 ?
             <>
@@ -240,7 +257,7 @@ const EcomerceData = () => {
                 <div className='revenue-by-location mt-4 p-4'>
                   {/* <RevenueByLocation /> */}
                   <img className='world-data' src={World} />
-                  <div id="totalSaleRef">
+                  <div >
                     <RevenueByLocation />
                   </div>
                 </div>
@@ -283,7 +300,7 @@ const EcomerceData = () => {
                     <div className='fourth f-12'>Amount</div>
                   </div>
                 </div>
-                <div className='revenue-by-location mt-4' >
+                <div className='revenue-by-location mt-4' id="totalSaleRef">
                   <TotalSales totalSaleRef={totalSaleRef}/>
                 </div>
               </div>

@@ -11,13 +11,13 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 
 
-const Main = ({children, width,setShowNotification, mainRef}) => {
+const Main = ({children, width,setShowNotification, mainRef,headerRef}) => {
   const {theme, setThemeContext,isOpen,setIsOpen} = useTheme()
   
   // console.log(setShowNotification)
   return (
-    <div ref={mainRef} className={`main ${width}`} >
-      <div className='header d-flex p-4 justify-content-between' >
+    <div  className={`main ${width}`} >
+      <div className='header d-flex p-4 justify-content-between' ref={headerRef} >
         <div className='left d-flex '>
         <div className={`menu-icon me-2 ${isOpen ? 'open' : ''}`} onClick={()=>setIsOpen(!isOpen)}>
         <div className="bar" />
@@ -92,7 +92,7 @@ const Main = ({children, width,setShowNotification, mainRef}) => {
 
         </div>
       </div>
-      <div className='p-4'>
+      <div className='p-4' ref={mainRef}>
         {children}
       </div>
       {/* <TotalSales /> */}
